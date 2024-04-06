@@ -1,11 +1,9 @@
 package com.study.springbasic.member;
 
-import com.study.springbasic.AppConfig;
+import com.study.springbasic.AppConfigJavacode;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
 
@@ -13,7 +11,7 @@ class MemberServiceTest {
 
     @BeforeEach
     public void beforeEach(){
-        AppConfig appConfig = new AppConfig();
+        AppConfigJavacode appConfig = new AppConfigJavacode();
         memberService = appConfig.memberService();
     }
 

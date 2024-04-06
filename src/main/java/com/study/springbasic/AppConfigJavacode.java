@@ -1,5 +1,6 @@
 package com.study.springbasic;
 
+
 import com.study.springbasic.discount.DiscountPolicy;
 import com.study.springbasic.discount.RateDiscountPolicy;
 import com.study.springbasic.member.MemberRepository;
@@ -8,34 +9,29 @@ import com.study.springbasic.member.MemberServiceImpl;
 import com.study.springbasic.member.MemoryMemberRepository;
 import com.study.springbasic.order.OrderService;
 import com.study.springbasic.order.OrderServiceImpl;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration //걍 설정정보임..
-public class AppConfig {
-    // @Configuration AppConfig에 설정을 구성한다는 뜻
-    //@Bean 스프링 컨테이너에 스프링 빈으로 등록한다는 뜻임!!
+public class AppConfigJavacode {
+    //메서드 명에서 역할이 드러나게 리팩터링 해준다
+    
 
-
-    //스프링 DI 적용시키기
-//    @Bean(name = "mmm") //이렇게 이름 바꿀 수 있는데 바꾸지 말고 걍 쓰자
-    @Bean
+    //이렇게 하면 MemberService를 사용할때 MemoryMemberRepository를 사용할 수 있게 함
+    //즉 MemberServiceImpl에서는 MemoryMemberRepository를 알 수 없다
+    //생성자를 통해서 주입하는 것임 이것이!!!!!!!!!!!!생성자 주입!!!!!!!!!!!!!!!!!!!!
     public MemberService memberService(){
         return new MemberServiceImpl(memberRepository());
     }
+    //리팩터링 단축키 ctrl alt M
+    private MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
 
-    @Bean
     public OrderService orderService(){
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
-    @Bean
-    public MemberRepository memberRepository(){
-        return new MemoryMemberRepository();
-    }
-
-    @Bean
-    public DiscountPolicy discountPolicy(){
+    //이렇게 할인 정책을 변경해도 클라이언트는 수정할 필요가 없다!!!
+    private DiscountPolicy discountPolicy() {
+//        return new FixDiscountPolicy();
         return new RateDiscountPolicy();
     }
 }
