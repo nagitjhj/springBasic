@@ -1,8 +1,11 @@
 package com.study.springbasic.member;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class MemoryMemberRepository implements MemberRepository{
 
     //저장소니까 Map 넣어서 이렇게 구현해줌 테스트용으로
